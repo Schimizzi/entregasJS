@@ -1,5 +1,5 @@
 const nombre = prompt("ingrese su nombre y apellido");
-let opcion = parseInt(prompt("ingrese la opcion deseada: / 1- Nivel facil / 2- Nivel Medio / 3- Nivel Dificil"))
+let opcion
 let i = 4;
 function pruebasuma() {
     while (i < 12 && i > 0) {
@@ -72,31 +72,52 @@ function nota() {
     }
 }
 
-
-switch (opcion) {
-    case 1:
-        console.log("Nivel Facil");
-        pruebasuma();
-        pruebasuma();
-        pruebasuma();
-        nota();
-        break;
-    case 2:
-        console.log("Nivel Medio");
-        pruebasuma();
-        pruebaresta();
-        pruebasuma();
-        pruebaresta();
-        nota();
-        break;
-    case 3:
-        console.log("Nivel Dificil");
-        pruebasuma();
-        pruebaresta();
-        pruebadivision();
-        nota();
-        break;
-    default:
-        console.log("Opción no válida");
+while(true){
+    opcion = parseInt(prompt("ingrese la opcion deseada: / 1- Nivel facil / 2- Nivel Medio / 3- Nivel Dificil"))
+    if(opcion === 1 || opcion === 2 || opcion ===3){
+        switch (opcion) {
+            case 1:
+                console.log("Nivel Facil");
+                pruebasuma();
+                pruebasuma();
+                pruebasuma();
+                nota();
+                break;
+            case 2:
+                console.log("Nivel Medio");
+                pruebasuma();
+                pruebaresta();
+                pruebasuma();
+                pruebaresta();
+                nota();
+                break;
+            case 3:
+                console.log("Nivel Dificil");
+                pruebasuma();
+                pruebaresta();
+                pruebadivision();
+                nota();
+                break;
+            default:
+                console.log("Opción no válida");
+        }
+        break;   
+    } else {
+        console.log("otra oportunidad");
+    }
 }
 
+/* 
+
+var numeroIngresado;
+
+while (true) {
+    numeroIngresado = parseInt(prompt("Escribe el número 1:"));
+    
+    if (numeroIngresado === 1) {
+        console.log("¡Has escrito el número 1!");
+        break; // Sale del bucle cuando se ingresa el número 1
+    } else {
+        console.log("Por favor, escribe el número 1.");
+    }
+} */
