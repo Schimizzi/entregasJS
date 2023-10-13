@@ -106,18 +106,3 @@ while(true){
         console.log("otra oportunidad");
     }
 }
-
-/* 
-
-var numeroIngresado;
-
-while (true) {
-    numeroIngresado = parseInt(prompt("Escribe el número 1:"));
-    
-    if (numeroIngresado === 1) {
-        console.log("¡Has escrito el número 1!");
-        break; // Sale del bucle cuando se ingresa el número 1
-    } else {
-        console.log("Por favor, escribe el número 1.");
-    }
-} */
