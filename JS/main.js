@@ -1,10 +1,31 @@
 const nombre = prompt("ingrese su nombre y apellido");
 let opcion
 let i = 4;
+let nivel = ""
+const generadorRandom = () => {
+    return Math.round(Math.random() * 100)
+}
+
+
+//// pruebas para la proxima entrega
+/* class Usuarios{
+    constructor(nombre, edad, puntaje){
+        this.nombre=nombre;
+        this.edad=edad;
+        this.puntaje=puntaje
+    }
+    podio(){
+        
+    }
+
+} */
+
+////hasta aca lo nueva
+
 function pruebasuma() {
     while (i < 12 && i > 0) {
-        let num1 = Math.floor(Math.random() * 10) + 10;
-        let num2 = Math.floor(Math.random() * 10) + 1;
+        let num1 = generadorRandom()    
+        let num2 = generadorRandom()    
         let sumax = num1 + num2;
         let resul = parseInt(prompt("escriba el resultado de " + num1 + " + " + num2 + ":"));
         if (sumax == resul) {
@@ -24,8 +45,8 @@ function pruebasuma() {
 }
 function pruebaresta() {
     while (i < 10 && i > 0) {
-        let num1 = Math.floor(Math.random() * 10) + 10;
-        let num2 = Math.floor(Math.random() * 10) + 1;
+        let num1 = generadorRandom() 
+        let num2 = generadorRandom() 
         let restax = num1 - num2;
         let resul = parseInt(prompt("escriba el resultado de " + num1 + " - " + num2 + ":"));
         if (restax == resul) {
@@ -47,7 +68,7 @@ function pruebadivision() {
     while (i < 12 && i > 0) {
         let num3 = Math.floor(Math.random() * 10) * 2;
         let divix = (num3 / 2);
-        let resul = parseInt(prompt("escriba el resultado de " + num3 + " / " + 2 + ":"));
+        let resul = parseInt(prompt("escriba el resultado de " + num3 + " / 2 :"));
         if (divix == resul) {
             alert("Muy bien!");
             break;
@@ -65,7 +86,8 @@ function pruebadivision() {
 }
 function nota() {
     if (i > 0) {
-        console.log(nombre + ", ud ha aprobado el examen!");
+        let nota = i + 6
+        console.log(nombre + ", ha aprobado el examen de nivel "+opcion,"! con una nota de:" + nota);
 
     } else {
         console.log(nombre + ", ha reprobado el examen");
@@ -106,3 +128,4 @@ while(true){
         console.log("otra oportunidad");
     }
 }
+
