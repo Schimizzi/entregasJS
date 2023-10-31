@@ -1,5 +1,4 @@
-//const nombre = prompt("ingrese su nombre y apellido");
-//const edad = prompt("ingrese su edad");
+// Var //
 
 let opcion
 let i = 4;
@@ -10,7 +9,9 @@ const generadorRandom = () => {
 }
 
 
-//// pruebas para la proxima entrega
+
+// Class //
+
 class Usuarios {
     constructor(nombre, edad, puntaje) {
         this.nombre = nombre;
@@ -23,11 +24,13 @@ class Usuarios {
 
 }
 const usuariosPodio = [];
-const usuario1 = new Usuarios("Carlos", 55, 6);
+const usuario1 = new Usuarios("Carlos", 55, 8);
 usuariosPodio.push(usuario1);
-const usuario2 = new Usuarios("Romina", 22, 4);
+const usuario2 = new Usuarios("Romina", 22, 5);
 usuariosPodio.push(usuario2);
 let usuariosExamen = ""
+
+// Functions //
 
 function newUser() {
     const nombreNuevo = prompt("ingrese su nombre y apellido");
@@ -36,13 +39,6 @@ function newUser() {
     usuariosExamen = new Usuarios(nombreNuevo, edadNuevo, nota);
     usuariosPodio.push(usuariosExamen);
 }
-newUser();
-console.log(usuariosPodio);
-console.log(usuariosExamen.nombre);
-
-
-
-////hasta aca lo nueva
 
 function pruebasuma() {
     while (i < 12 && i > 0) {
@@ -65,6 +61,7 @@ function pruebasuma() {
         }
     }
 }
+
 function pruebaresta() {
     while (i < 10 && i > 0) {
         let num1 = generadorRandom()
@@ -86,6 +83,7 @@ function pruebaresta() {
         }
     }
 }
+
 function pruebadivision() {
     while (i < 12 && i > 0) {
         let num3 = Math.floor(Math.random() * 10) * 2;
@@ -106,16 +104,22 @@ function pruebadivision() {
         }
     }
 }
+
 function nota() {
     if (i > 0) {
         let notaPun = i + 6
-        console.log(usuariosExamen.nombre + ", ha aprobado el examen de nivel " + opcion, "! con una nota de:" + notaPun);        
+        console.log(usuariosExamen.nombre + ", ha aprobado el examen de Nivel " + opcion, "! con un " + notaPun);        
         return notaPun;
     } else {
+        let notaPun = i + 4
         console.log(usuariosExamen.nombre + ", ha reprobado el examen");
+        return notaPun;
     }
 }
 
+// Start //
+
+newUser();
 
 while (true) {
     opcion = parseInt(prompt("ingrese la opcion deseada: / 1- Nivel facil / 2- Nivel Medio / 3- Nivel Dificil"))
@@ -151,19 +155,9 @@ while (true) {
         console.log("otra oportunidad");
     }
 }
-console.log(notaPuntaje);
 usuariosPodio[2].puntaje = notaPuntaje;
-//usuariosPodio.push(usuariosExamen[2].puntaje);
 usuariosPodio.sort((a, b) => a.puntaje - b.puntaje);
-/* usuariosPodio.forEach( usuariosExamen => {
-    console.log(j +""+ usuariosExamen.nombre + "- Edad: "+ usuariosExamen.edad+ " - Puntaje: "+ usuariosExamen.puntaje);
-});
-
-usuariosPodio.forEach(function(usuariosExamen) {
-    console.log(j + "" + usuariosExamen.nombre + " - Edad: " + usuariosExamen.edad + " - Puntaje: " + usuariosExamen.puntaje);
-});
- */
 console.log(usuariosPodio)
-console.log("El Primer lugar es para: ", usuariosPodio[2].nombre);
-console.log("El Segundo lugar es para: ", usuariosPodio[1].nombre);
-console.log("El Tercer lugar es para: ", usuariosPodio[0].nombre);
+console.log("El Primer lugar es para ", usuariosPodio[2].nombre, "con un puntaje de ", usuariosPodio[2].puntaje);
+console.log("El Segundo lugar es para ", usuariosPodio[1].nombre, "con un puntaje de ", usuariosPodio[1].puntaje);
+console.log("El Tercer lugar es para ", usuariosPodio[0].nombre, "con un puntaje de ", usuariosPodio[0].puntaje);
