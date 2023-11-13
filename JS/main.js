@@ -33,18 +33,68 @@ let usuariosExamen = ""
 // Functions //
 
 function newUser() {
-    const nombreNuevo = prompt("ingrese su nombre y apellido");
-    const edadNuevo = parseInt(prompt("ingrese su edad"));
+    const nombreNuevo = document.getElementById('nombre').value;
+    const edadNuevo = parseInt(document.getElementById('edad').value);
     const nota = 0;
     usuariosExamen = new Usuarios(nombreNuevo, edadNuevo, nota);
     usuariosPodio.push(usuariosExamen);
+    console.log("Nuevo usuario registrado:", usuariosExamen);
+
 }
 
+
+
+function generarPregunta() {
+    let num1 = 22;
+    let num2 = 33;
+
+    document.getElementById('pregunta').textContent = "Escriba el resultado de " + num1 + " + " + num2 + ":";
+}
+
+function verificarResultado() {
+    let num1 = parseInt(document.getElementById('num1').value);
+    let num2 = parseInt(document.getElementById('num2').value);
+    let resultadoUsuario = parseInt(document.getElementById('resultado').value);
+
+    let sumaCorrecta = num1 + num2;
+
+    if (resultadoUsuario === sumaCorrecta) {
+        alert("¡Muy bien!");
+        reiniciarPrueba();
+    } else if (i === 1) {
+        i--;
+        alert("Respuesta Incorrecta, Se le agotaron los intentos");
+        reiniciarPrueba();
+    } else {
+        i--;
+        alert("Respuesta Incorrecta, Le quedan " + i + " intentos");
+    }
+}
+
+function reiniciarPrueba() {
+    i = 4;
+    generarPregunta();
+    document.getElementById('num1').value = "";
+    document.getElementById('num2').value = "";
+    document.getElementById('resultado').value = "";
+}
+
+// Función generadora de números aleatorios
+/*  function generadorRandom() {
+    return Math.floor(Math.random() * 10) + 1; // Números aleatorios del 1 al 10
+} */
+
+// Iniciar la primera pregunta al cargar la página
+window.onload = function () {
+    generarPregunta();
+};
+ 
 function pruebasuma() {
     while (i < 12 && i > 0) {
         let num1 = generadorRandom()
         let num2 = generadorRandom()
         let sumax = num1 + num2;
+
         let resul = parseInt(prompt("escriba el resultado de " + num1 + " + " + num2 + ":"));
         if (sumax == resul) {
             alert("Muy bien!");
@@ -61,7 +111,7 @@ function pruebasuma() {
         }
     }
 }
-
+/* 
 function pruebaresta() {
     while (i < 10 && i > 0) {
         let num1 = generadorRandom()
@@ -104,11 +154,11 @@ function pruebadivision() {
         }
     }
 }
-
+ */
 function nota() {
     if (i > 0) {
         let notaPun = i + 6
-        console.log(usuariosExamen.nombre + ", ha aprobado el examen de Nivel " + opcion, "! con un " + notaPun);        
+        console.log(usuariosExamen.nombre + ", ha aprobado el examen de Nivel " + opcion, "! con un " + notaPun);
         return notaPun;
     } else {
         let notaPun = i + 4
