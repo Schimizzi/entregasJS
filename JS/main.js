@@ -33,15 +33,19 @@ generadorRandom = () => {
 }
 
 
-function newUser() {
+function newUser(callback) {
     const nombreNuevo = document.getElementById('nombre').value;
     const edadNuevo = parseInt(document.getElementById('edad').value);
     const nota = 0;
     usuariosExamen = new Usuarios(nombreNuevo, edadNuevo, nota);
     usuariosPodio.push(usuariosExamen);
-    console.log("Nuevo usuario registrado:", usuariosExamen);
-
+    let mensajeNombre = document.createElement('h2');
+    mensajeNombre.textContent = `Bienvenido ${nombreNuevo} !`;
+    mensajeNombre.style.color = 'blue';
+    nombreBtn.insertAdjacentElement('afterend', mensajeNombre);
 }
+
+
 
 
 
@@ -57,7 +61,7 @@ window.onload = function () {
 
 
 
-function verificarResultado(callback) {
+/* function verificarResultado(callback) {
     let numeros = generarEjercicio();
     console.log(numeros);
     let num1 = numeros.num1;
@@ -65,27 +69,76 @@ function verificarResultado(callback) {
     let num2 = numeros.num2;
     console.log(num2);
     document.getElementById('pregunta').textContent = "Escriba el resultado de " + num1 + " + " + num2 + ":";
-
     document.getElementById('verificarBtn').addEventListener('click', function () {
         let resultadoUsuario = parseInt(document.getElementById('resultadoSuma').value);
         console.log("num1 + num2 ", num1 + num2);
         console.log("resultadoUsuario", resultadoUsuario);
 
+        let mensajeElement = document.createElement('h2');
         if (resultadoUsuario === (num1 + num2)) {
-            console.log("¡Muy bien!");
+            mensajeElement.textContent = "¡Muy bien!";
+            mensajeElement.style.color = 'green';
             if (typeof callback === 'function') {
-               callback();
+                callback();
             }
         } else {
-            console.log("Respuesta Incorrecta");
+            mensajeElement.textContent = "Respuesta Incorrecta";
+            mensajeElement.style.color = 'red';
             if (typeof callback === 'function') {
-                callback(); 
+                callback();
             }
         }
-
+        verificarBtn.insertAdjacentElement('afterend', mensajeElement);
         console.log("nuevo callback creado");
     });
 }
+ */
+function verificarResultado(callback) {
+    let numeros = generarEjercicio();
+    console.log(numeros);
+    let num1 = numeros.num1;
+    console.log(num1);
+    let num2 = numeros.num2;
+    console.log(num2);
+
+    let preguntaElement = document.getElementById('pregunta');
+    preguntaElement.textContent = "Escriba el resultado de " + num1 + " + " + num2 + ":";
+
+    let verificarBtn = document.getElementById('verificarBtn');
+
+    // Definir la función manejadora del evento
+    function manejarClick() {
+        let resultadoUsuario = parseInt(document.getElementById('resultadoSuma').value);
+        console.log("num1 + num2 ", num1 + num2);
+        console.log("resultadoUsuario", resultadoUsuario);
+
+        let mensajeElement = document.createElement('h2');
+        if (resultadoUsuario === (num1 + num2)) {
+            mensajeElement.textContent = "¡Muy bien!";
+            mensajeElement.style.color = 'green';
+            if (typeof callback === 'function') {
+                callback();
+            }
+        } else {
+            mensajeElement.textContent = "Respuesta Incorrecta";
+            mensajeElement.style.color = 'red';
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }
+
+        // Remover el oyente de eventos después de manejar el clic
+        verificarBtn.removeEventListener('click', manejarClick);
+        
+        // Insertar el mensaje después del botón
+        verificarBtn.insertAdjacentElement('afterend', mensajeElement);
+        console.log("Nuevo callback creado");
+    }
+
+    // Agregar el oyente de eventos
+    verificarBtn.addEventListener('click', manejarClick);
+}
+
 
 
 /* function pruebasuma() {
@@ -171,39 +224,40 @@ function nota() {
 newUser();
 
 while (true) {
-    //    opcion = parseInt(prompt("ingrese la opcion deseada: / 1- Nivel facil / 2- Nivel Medio / 3- Nivel Dificil"))
-    //    if (opcion === 1 || opcion === 2 || opcion === 3) {
-    if (true) {
+    opcion = parseInt(prompt("ingrese la opcion deseada: / 1- Nivel facil / 2- Nivel Medio / 3- Nivel Dificil"))
+    if (opcion === 1 || opcion === 2 || opcion === 3) {
+        if (true) {
 
-        switch (1) {
-            case 1:
-                console.log("Nivel Facil");
-                verificarResultado();
-                //verificarResultado();
-                //verificarResultado();
-                notaPuntaje = nota();
-                break;
-            case 2:
-                console.log("Nivel Medio");
-                pruebasuma();
-                pruebaresta();
-                pruebasuma();
-                pruebaresta();
-                notaPuntaje = nota();
-                break;
-            case 3:
-                console.log("Nivel Dificil");
-                pruebasuma();
-                pruebaresta();
-                pruebadivision();
-                notaPuntaje = nota();
-                break;
-            default:
-                console.log("Opción no válida");
+            switch (opcion) {
+                case 1:
+                    console.log("Nivel Facil");
+                    verificarResultado();
+                    //verificarResultado();
+                    //verificarResultado();
+                    notaPuntaje = nota();
+                    break;
+                case 2:
+                    console.log("Nivel Medio");
+                    pruebasuma();
+                    pruebaresta();
+                    pruebasuma();
+                    pruebaresta();
+                    notaPuntaje = nota();
+                    break;
+                case 3:
+                    console.log("Nivel Dificil");
+                    pruebasuma();
+                    pruebaresta();
+                    pruebadivision();
+                    notaPuntaje = nota();
+                    break;
+                default:
+                    console.log("Opción no válida");
+            }
+            break;
+        } else {
+            console.log("otra oportunidad");
         }
-        break;
-    } else {
-        console.log("otra oportunidad");
     }
 }
 usuariosPodio[2].puntaje = notaPuntaje;
