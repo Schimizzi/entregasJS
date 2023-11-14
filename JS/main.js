@@ -4,9 +4,6 @@ let opcion
 let i = 4;
 let nivel = ""
 let notaPuntaje;
-const generadorRandom = () => {
-    return Math.round(Math.random() * 100)
-}
 
 
 
@@ -31,6 +28,10 @@ usuariosPodio.push(usuario2);
 let usuariosExamen = ""
 
 // Functions //
+generadorRandom = () => {
+    return Math.round(Math.random() * 100)
+}
+
 
 function newUser() {
     const nombreNuevo = document.getElementById('nombre').value;
@@ -44,59 +45,57 @@ function newUser() {
 
 
 
-function generarPregunta() {
-    let num1 = 22;
-    let num2 = 33;
-
-    document.getElementById('pregunta').textContent = "Escriba el resultado de " + num1 + " + " + num2 + ":";
+function generarEjercicio() {
+    let num1 = generadorRandom();
+    let num2 = generadorRandom();
+    return { num1: num1, num2: num2 };
 }
 
-function verificarResultado() {
-    let num1 = parseInt(document.getElementById('num1').value);
-    let num2 = parseInt(document.getElementById('num2').value);
-    let resultadoUsuario = parseInt(document.getElementById('resultado').value);
-
-    let sumaCorrecta = num1 + num2;
-
-    if (resultadoUsuario === sumaCorrecta) {
-        alert("¡Muy bien!");
-        reiniciarPrueba();
-    } else if (i === 1) {
-        i--;
-        alert("Respuesta Incorrecta, Se le agotaron los intentos");
-        reiniciarPrueba();
-    } else {
-        i--;
-        alert("Respuesta Incorrecta, Le quedan " + i + " intentos");
-    }
-}
-
-function reiniciarPrueba() {
-    i = 4;
-    generarPregunta();
-    document.getElementById('num1').value = "";
-    document.getElementById('num2').value = "";
-    document.getElementById('resultado').value = "";
-}
-
-// Función generadora de números aleatorios
-/*  function generadorRandom() {
-    return Math.floor(Math.random() * 10) + 1; // Números aleatorios del 1 al 10
-} */
-
-// Iniciar la primera pregunta al cargar la página
 window.onload = function () {
-    generarPregunta();
+    generarEjercicio();
 };
- 
-function pruebasuma() {
+
+
+
+function verificarResultado(callback) {
+    let numeros = generarEjercicio();
+    console.log(numeros);
+    let num1 = numeros.num1;
+    console.log(num1);
+    let num2 = numeros.num2;
+    console.log(num2);
+    document.getElementById('pregunta').textContent = "Escriba el resultado de " + num1 + " + " + num2 + ":";
+
+    document.getElementById('verificarBtn').addEventListener('click', function () {
+        let resultadoUsuario = parseInt(document.getElementById('resultadoSuma').value);
+        console.log("num1 + num2 ", num1 + num2);
+        console.log("resultadoUsuario", resultadoUsuario);
+
+        if (resultadoUsuario === (num1 + num2)) {
+            console.log("¡Muy bien!");
+            if (typeof callback === 'function') {
+               callback();
+            }
+        } else {
+            console.log("Respuesta Incorrecta");
+            if (typeof callback === 'function') {
+                callback(); 
+            }
+        }
+
+        console.log("nuevo callback creado");
+    });
+}
+
+
+/* function pruebasuma() {
     while (i < 12 && i > 0) {
         let num1 = generadorRandom()
         let num2 = generadorRandom()
         let sumax = num1 + num2;
 
-        let resul = parseInt(prompt("escriba el resultado de " + num1 + " + " + num2 + ":"));
-        if (sumax == resul) {
+        let resul = parseInt(document.getElementById('resultadoSuma').value);
+        if (sumax === resul) {
             alert("Muy bien!");
             break;
         } else if (i == 2) {
@@ -110,7 +109,7 @@ function pruebasuma() {
             alert("Respuesta Incorrecta, Le quedan " + i + " intentos");
         }
     }
-}
+} */
 /* 
 function pruebaresta() {
     while (i < 10 && i > 0) {
@@ -172,14 +171,16 @@ function nota() {
 newUser();
 
 while (true) {
-    opcion = parseInt(prompt("ingrese la opcion deseada: / 1- Nivel facil / 2- Nivel Medio / 3- Nivel Dificil"))
-    if (opcion === 1 || opcion === 2 || opcion === 3) {
-        switch (opcion) {
+    //    opcion = parseInt(prompt("ingrese la opcion deseada: / 1- Nivel facil / 2- Nivel Medio / 3- Nivel Dificil"))
+    //    if (opcion === 1 || opcion === 2 || opcion === 3) {
+    if (true) {
+
+        switch (1) {
             case 1:
                 console.log("Nivel Facil");
-                pruebasuma();
-                pruebasuma();
-                pruebasuma();
+                verificarResultado();
+                //verificarResultado();
+                //verificarResultado();
                 notaPuntaje = nota();
                 break;
             case 2:
