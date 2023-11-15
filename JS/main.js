@@ -1,268 +1,58 @@
-// Var //
+ // Función para generar números aleatorios entre 1 y 10
+ function generarNumeroAleatorio() {
+    return Math.floor(Math.random() * 10) + 1;
+}
 
-let opcion
-let i = 4;
-let nivel = ""
-let notaPuntaje;
+// Función para crear una fila de ejercicio
+function crearFilaEjercicio() {
+    var fila = document.createElement('div');
+    fila.classList.add('fila-ejercicio');
 
+    var num1 = generarNumeroAleatorio();
+    var num2 = generarNumeroAleatorio();
 
+    // Mostrar los números aleatorios en los campos correspondientes
+    fila.innerHTML = `
+        <label>${num1}</label>
+        <label>+ ${num2}</label>
+        <label>= <input type="number" class="respuesta" required></label>
+    `;
 
-// Class //
+    document.getElementById('ejercicios').appendChild(fila);
+}
 
-class Usuarios {
-    constructor(nombre, edad, puntaje) {
-        this.nombre = nombre;
-        this.edad = edad;
-        this.puntaje = puntaje
+// Función para corregir los resultados
+function corregir() {
+    var filasEjercicio = document.querySelectorAll('.fila-ejercicio');
+    var resultadosCorrectos = 0;
+    var resultadosIncorrectos = 0;
+
+    filasEjercicio.forEach(function(fila) {
+        var respuestaUsuario = parseInt(fila.querySelector('.respuesta').value);
+        var num1 = parseInt(fila.querySelector('label:nth-child(1)').textContent);
+        var num2 = parseInt(fila.querySelector('label:nth-child(2)').textContent.split(' ')[1]);
+        var sumaCorrecta = num1 + num2;
+
+        if (respuestaUsuario === sumaCorrecta) {
+            resultadosCorrectos++;
+        } else {
+            resultadosIncorrectos++;
+        }
+    });
+
+    // Mostrar resultados
+    var correctosElemento = document.getElementById('correctos');
+    var incorrectosElemento = document.getElementById('incorrectos');
+
+    correctosElemento.textContent = 'Correctos: ' + resultadosCorrectos;
+    incorrectosElemento.textContent = 'Incorrectos: ' + resultadosIncorrectos;
+}
+
+// Inicializar 5 filas de ejercicios al cargar la página
+window.onload = function() {
+    for (var i = 0; i < 5; i++) {
+        crearFilaEjercicio();
     }
-    podio() {
-        console.log(usuariosExamen.nombreNuevo + "tu puntaje es: " + usuariosExamen.puntaje)
-    }
-
-}
-const usuariosPodio = [];
-const usuario1 = new Usuarios("Carlos", 55, 8);
-usuariosPodio.push(usuario1);
-const usuario2 = new Usuarios("Romina", 22, 5);
-usuariosPodio.push(usuario2);
-let usuariosExamen = ""
-
-// Functions //
-generadorRandom = () => {
-    return Math.round(Math.random() * 100)
-}
-
-
-function newUser(callback) {
-    const nombreNuevo = document.getElementById('nombre').value;
-    const edadNuevo = parseInt(document.getElementById('edad').value);
-    const nota = 0;
-    usuariosExamen = new Usuarios(nombreNuevo, edadNuevo, nota);
-    usuariosPodio.push(usuariosExamen);
-    let mensajeNombre = document.createElement('h2');
-    mensajeNombre.textContent = `Bienvenido ${nombreNuevo} !`;
-    mensajeNombre.style.color = 'blue';
-    nombreBtn.insertAdjacentElement('afterend', mensajeNombre);
-}
-
-
-
-
-
-function generarEjercicio() {
-    let num1 = generadorRandom();
-    let num2 = generadorRandom();
-    return { num1: num1, num2: num2 };
-}
-
-window.onload = function () {
-    generarEjercicio();
 };
 
 
-
-/* function verificarResultado(callback) {
-    let numeros = generarEjercicio();
-    console.log(numeros);
-    let num1 = numeros.num1;
-    console.log(num1);
-    let num2 = numeros.num2;
-    console.log(num2);
-    document.getElementById('pregunta').textContent = "Escriba el resultado de " + num1 + " + " + num2 + ":";
-    document.getElementById('verificarBtn').addEventListener('click', function () {
-        let resultadoUsuario = parseInt(document.getElementById('resultadoSuma').value);
-        console.log("num1 + num2 ", num1 + num2);
-        console.log("resultadoUsuario", resultadoUsuario);
-
-        let mensajeElement = document.createElement('h2');
-        if (resultadoUsuario === (num1 + num2)) {
-            mensajeElement.textContent = "¡Muy bien!";
-            mensajeElement.style.color = 'green';
-            if (typeof callback === 'function') {
-                callback();
-            }
-        } else {
-            mensajeElement.textContent = "Respuesta Incorrecta";
-            mensajeElement.style.color = 'red';
-            if (typeof callback === 'function') {
-                callback();
-            }
-        }
-        verificarBtn.insertAdjacentElement('afterend', mensajeElement);
-        console.log("nuevo callback creado");
-    });
-}
- */
-function verificarResultado(callback) {
-    let numeros = generarEjercicio();
-    console.log(numeros);
-    let num1 = numeros.num1;
-    console.log(num1);
-    let num2 = numeros.num2;
-    console.log(num2);
-
-    let preguntaElement = document.getElementById('pregunta');
-    preguntaElement.textContent = "Escriba el resultado de " + num1 + " + " + num2 + ":";
-
-    let verificarBtn = document.getElementById('verificarBtn');
-
-    // Definir la función manejadora del evento
-    function manejarClick() {
-        let resultadoUsuario = parseInt(document.getElementById('resultadoSuma').value);
-        console.log("num1 + num2 ", num1 + num2);
-        console.log("resultadoUsuario", resultadoUsuario);
-
-        let mensajeElement = document.createElement('h2');
-        if (resultadoUsuario === (num1 + num2)) {
-            mensajeElement.textContent = "¡Muy bien!";
-            mensajeElement.style.color = 'green';
-            if (typeof callback === 'function') {
-                callback();
-            }
-        } else {
-            mensajeElement.textContent = "Respuesta Incorrecta";
-            mensajeElement.style.color = 'red';
-            if (typeof callback === 'function') {
-                callback();
-            }
-        }
-
-        // Remover el oyente de eventos después de manejar el clic
-        verificarBtn.removeEventListener('click', manejarClick);
-        
-        // Insertar el mensaje después del botón
-        verificarBtn.insertAdjacentElement('afterend', mensajeElement);
-        console.log("Nuevo callback creado");
-    }
-
-    // Agregar el oyente de eventos
-    verificarBtn.addEventListener('click', manejarClick);
-}
-
-
-
-/* function pruebasuma() {
-    while (i < 12 && i > 0) {
-        let num1 = generadorRandom()
-        let num2 = generadorRandom()
-        let sumax = num1 + num2;
-
-        let resul = parseInt(document.getElementById('resultadoSuma').value);
-        if (sumax === resul) {
-            alert("Muy bien!");
-            break;
-        } else if (i == 2) {
-            i--
-            alert("Respuesta Incorrecta, Le queda " + i + " intento");
-        } else if (i == 1) {
-            i--
-            alert("Respuesta Incorrecta, Se le agotaron los intentos");
-        } else {
-            i--
-            alert("Respuesta Incorrecta, Le quedan " + i + " intentos");
-        }
-    }
-} */
-/* 
-function pruebaresta() {
-    while (i < 10 && i > 0) {
-        let num1 = generadorRandom()
-        let num2 = generadorRandom()
-        let restax = num1 - num2;
-        let resul = parseInt(prompt("escriba el resultado de " + num1 + " - " + num2 + ":"));
-        if (restax == resul) {
-            alert("Muy bien!");
-            break;
-        } else if (i == 2) {
-            i--
-            alert("Respuesta Incorrecta, Le queda " + i + " intento");
-        } else if (i == 1) {
-            i--
-            alert("Respuesta Incorrecta, Se le agotaron los intentos");
-        } else {
-            i--
-            alert("Respuesta Incorrecta, Le quedan " + i + " intentos");
-        }
-    }
-}
-
-function pruebadivision() {
-    while (i < 12 && i > 0) {
-        let num3 = Math.floor(Math.random() * 10) * 2;
-        let divix = (num3 / 2);
-        let resul = parseInt(prompt("escriba el resultado de " + num3 + " / 2 :"));
-        if (divix == resul) {
-            alert("Muy bien!");
-            break;
-        } else if (i == 2) {
-            i--
-            alert("Respuesta Incorrecta, Le queda " + i + " intento");
-        } else if (i == 1) {
-            i--
-            alert("Respuesta Incorrecta, Se le agotaron los intentos");
-        } else {
-            i--
-            alert("Respuesta Incorrecta, Le quedan " + i + " intentos");
-        }
-    }
-}
- */
-function nota() {
-    if (i > 0) {
-        let notaPun = i + 6
-        console.log(usuariosExamen.nombre + ", ha aprobado el examen de Nivel " + opcion, "! con un " + notaPun);
-        return notaPun;
-    } else {
-        let notaPun = i + 4
-        console.log(usuariosExamen.nombre + ", ha reprobado el examen");
-        return notaPun;
-    }
-}
-
-// Start //
-
-newUser();
-
-while (true) {
-    opcion = parseInt(prompt("ingrese la opcion deseada: / 1- Nivel facil / 2- Nivel Medio / 3- Nivel Dificil"))
-    if (opcion === 1 || opcion === 2 || opcion === 3) {
-        if (true) {
-
-            switch (opcion) {
-                case 1:
-                    console.log("Nivel Facil");
-                    verificarResultado();
-                    //verificarResultado();
-                    //verificarResultado();
-                    notaPuntaje = nota();
-                    break;
-                case 2:
-                    console.log("Nivel Medio");
-                    pruebasuma();
-                    pruebaresta();
-                    pruebasuma();
-                    pruebaresta();
-                    notaPuntaje = nota();
-                    break;
-                case 3:
-                    console.log("Nivel Dificil");
-                    pruebasuma();
-                    pruebaresta();
-                    pruebadivision();
-                    notaPuntaje = nota();
-                    break;
-                default:
-                    console.log("Opción no válida");
-            }
-            break;
-        } else {
-            console.log("otra oportunidad");
-        }
-    }
-}
-usuariosPodio[2].puntaje = notaPuntaje;
-usuariosPodio.sort((a, b) => a.puntaje - b.puntaje);
-console.log(usuariosPodio)
-console.log("El Primer lugar es para ", usuariosPodio[2].nombre, "con un puntaje de ", usuariosPodio[2].puntaje);
-console.log("El Segundo lugar es para ", usuariosPodio[1].nombre, "con un puntaje de ", usuariosPodio[1].puntaje);
-console.log("El Tercer lugar es para ", usuariosPodio[0].nombre, "con un puntaje de ", usuariosPodio[0].puntaje);
