@@ -1,3 +1,4 @@
+
 //CLASS --------
 
 class Usuarios {
@@ -45,21 +46,81 @@ function newUser() {
     usuariosPodio.push(usuariosExamen);
 
     if(usuariosPodio.length === 1){
-        console.log("El Primer lugar es para ", usuariosPodio[0].nombre, "con un puntaje de ", usuariosPodio[0].puntaje);
+        Toastify({
+            text: `El Primer lugar es para ${usuariosPodio[0].nombre} con un puntaje de ${usuariosPodio[0].puntaje}`,
+            duration: 5000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+          }).showToast();
         guardarUsuariosEnLocalStorage();
     }else if(usuariosPodio.length === 2){
         usuariosPodio.sort((a, b) => a.puntaje - b.puntaje);
+        Toastify({
+            text: `El Primer lugar es para ${usuariosPodio[0].nombre} con un puntaje de ${usuariosPodio[0].puntaje}`,
+            duration: 5000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+          }).showToast();
+          Toastify({
+            text: `El Segundo lugar es para ${usuariosPodio[1].nombre} con un puntaje de ${usuariosPodio[1].puntaje}`,
+            duration: 5000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+          }).showToast();
         guardarUsuariosEnLocalStorage();
-        console.log(usuariosPodio);
-        console.log("El Primer lugar es para ", usuariosPodio[0].nombre, "con un puntaje de ", usuariosPodio[0].puntaje);
-        console.log("El Segundo lugar es para ", usuariosPodio[1].nombre, "con un puntaje de ", usuariosPodio[1].puntaje); 
     }else{
         usuariosPodio.sort((a, b) => a.puntaje - b.puntaje);
         guardarUsuariosEnLocalStorage();
-        console.log(usuariosPodio);
-        console.log("El Primer lugar es para ", usuariosPodio[0].nombre, "con un puntaje de ", usuariosPodio[0].puntaje);
-        console.log("El Segundo lugar es para ", usuariosPodio[1].nombre, "con un puntaje de ", usuariosPodio[1].puntaje);
-        console.log("El Tercer lugar es para ", usuariosPodio[2].nombre, "con un puntaje de ", usuariosPodio[2].puntaje);
+        Toastify({
+            text: `El Tercer lugar es para ${usuariosPodio[2].nombre} con un puntaje de ${usuariosPodio[2].puntaje}`,
+            duration: 5000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+          }).showToast();
+
+          Toastify({
+            text: `El Segundo lugar es para ${usuariosPodio[1].nombre} con un puntaje de ${usuariosPodio[1].puntaje}`,
+            duration: 5000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+          }).showToast();
+          Toastify({
+            text: `El Primer lugar es para ${usuariosPodio[0].nombre} con un puntaje de ${usuariosPodio[0].puntaje}`,
+            duration: 5000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+          }).showToast();
+
     }
 }
 
@@ -121,19 +182,57 @@ function verificarRespuesta() {
     if (preguntaActual < preguntas.length) {
         ejerciciosNumeros();
     } else if ((preguntaActual <= preguntas.length) && (i === 5)) {
-        resultadoElemento.textContent = `Obtuvo un ${i * 2},  Uds ha aprobado el examen`;
-        //crear un boton q registre el nombre
+        resultadoElemento.innerHTML = Swal.fire({
+            title: `Obtuvo un ${i * 2}<br>  Uds ha aprobado el examen`,
+            showDenyButton: true,
+            confirmButtonText: 'Registrese',
+          }).then((result) => {
+            if (result.isConfirmed) {
+                newUser();
+            } else if (result.isDenied) {
+                newUser();
+            }
+          });
 
     } else if ((preguntaActual <= preguntas.length) && (respuestaUsuario === suma)) {
-        resultadoElemento.textContent = 'Examen Finalizado. ¡Buen trabajo!';
-        //crear un boton q registre el nombre
+        resultadoElemento.textContent = Swal.fire({
+            title: 'Examen Finalizado. ¡Buen trabajo!',
+            showDenyButton: true,
+            confirmButtonText: 'Registrese',
+          }).then((result) => {
+            if (result.isConfirmed) {
+                newUser();
+            } else if (result.isDenied) {
+                newUser();
+            }
+          });
 
     } else if ((preguntaActual <= preguntas.length) && (i < 3)) {
-        resultadoElemento.textContent = `Obtuvo un ${i * 2}, ha reprobado el examen`;
-        //crear un boton q registre el nombre
+        resultadoElemento.textContent = Swal.fire({
+            title: `Obtuvo un ${i * 2}, ha reprobado el examen`,
+            showDenyButton: true,
+            confirmButtonText: 'Registrese',
+          }).then((result) => {
+            if (result.isConfirmed) {
+                newUser();
+            } else if (result.isDenied) {
+                newUser();
+            }
+          });
 
     } else {
-        resultadoElemento.textContent = 'Respuesta incorrecta, Uds ha aprobado el examen. ';
-        //crear un boton q registre el nombre
+        resultadoElemento.textContent = Swal.fire({
+            title: `Respuesta incorrecta <br> Uds ha aprobado el examen.`,
+            showDenyButton: true,
+            confirmButtonText: 'Registrese',
+          }).then((result) => {
+            if (result.isConfirmed) {
+                newUser();
+            } else if (result.isDenied) {
+                newUser();
+            }
+          });
+        ;
+        
     }
 }
