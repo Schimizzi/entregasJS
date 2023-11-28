@@ -1,4 +1,3 @@
-
 //CLASS --------
 
 class Usuarios {
@@ -14,7 +13,7 @@ class Usuarios {
 
 function mostrarUsuariosEnDOM() {
     const listaUsuarios = document.getElementById("lista-usuarios");
-    listaUsuarios.innerHTML = ""; 
+    listaUsuarios.innerHTML = "";
 
     usuariosPodio.sort((a, b) => b.puntaje - a.puntaje);
 
@@ -25,100 +24,116 @@ function mostrarUsuariosEnDOM() {
     });
 }
 
-// JSON -----------
+// JSON ------
+
+
 const usuariosPodio = JSON.parse(localStorage.getItem("usuariosPodio")) || [];
 
- 
+
 function guardarUsuariosEnLocalStorage() {
-    const usuarioExistente = usuariosPodio.find(user => user.nombre === usuariosExamen.nombre);
-
-    if (!usuariosPodio[2].nombre) {
-        usuariosPodio.push(usuariosPodio[2].nombre);
-    }else if(!usuariosPodio[1].nombre){
-        usuariosPodio.push(usuariosPodio[1].nombre);
-    }else if(!usuariosPodio[0].nombre){
-        usuariosPodio.push(usuariosPodio[0].nombre);
-    }else {
-        console.log("prueba");
-        }
-    usuariosPodio.sort((a, b) => b.puntaje - a.puntaje);
-    usuariosPodio.splice(10);
-
     localStorage.setItem("usuariosPodio", JSON.stringify(usuariosPodio));
     mostrarUsuariosEnDOM();
-}
+} 
 
-const usuario1 = new Usuarios("Carlos", 55, 7);
-usuariosPodio.push(usuario1);
-const usuario2 = new Usuarios("Romina", 22, 5);
-usuariosPodio.push(usuario2);
 let usuariosExamen = ""
 let notaFinal = 0;
 
 function newUser() {
-    notaFinal = corregir();
-    const nombreNuevo = prompt("ingrese su nombre");
-    const dniNuevo = parseInt(prompt("ingrese su DNI"));
-    usuariosExamen = new Usuarios(nombreNuevo, dniNuevo, notaFinal);
+    let nombreNuevo = prompt("ingrese su nombre");
+    let dniNuevo = parseInt(prompt("ingrese su DNI"));
+    usuariosExamen = new Usuarios(nombreNuevo, dniNuevo, i);
     usuariosPodio.push(usuariosExamen);
 
-    usuariosPodio.sort((a, b) => a.puntaje - b.puntaje);
-    guardarUsuariosEnLocalStorage();
-    console.log(usuariosPodio);
-    console.log("El Primer lugar es para ", usuariosPodio[2].nombre, "con un puntaje de ", usuariosPodio[2].puntaje);
-    console.log("El Segundo lugar es para ", usuariosPodio[1].nombre, "con un puntaje de ", usuariosPodio[1].puntaje);
-    console.log("El Tercer lugar es para ", usuariosPodio[0].nombre, "con un puntaje de ", usuariosPodio[0].puntaje);
-}
-
-function generarNumeroAleatorio() {
-    return Math.floor(Math.random() * 10) + 1;
-}
-
-// CREO LAS FILAS Y MUESTRO
-function crearFilaEjercicio() {
-    let fila = document.createElement("div");
-    fila.classList.add("fila-ejercicio");
-
-    let num1 = generarNumeroAleatorio();
-    let num2 = generarNumeroAleatorio();
-
-    fila.innerHTML = `<label>${num1}</label> <label>+ ${num2}</label> <label>= <input type="number" class="respuesta" required></label>`;
-
-    document.getElementById("ejercicios").appendChild(fila);
-}
-
-function corregir() {
-    let filasEjercicio = document.querySelectorAll(".fila-ejercicio");
-    let resultadosCorrectos = 0;
-    let resultadosIncorrectos = 0;
-
-    filasEjercicio.forEach(function (fila) {
-        let respuestaUsuario = parseInt(fila.querySelector(".respuesta").value);
-        let num1 = parseInt(fila.querySelector("label:nth-child(1)").textContent);
-        let num2 = parseInt(fila.querySelector("label:nth-child(2)").textContent.split(" ")[1]);
-        let sumaCorrecta = num1 + num2;
-
-        if (respuestaUsuario === sumaCorrecta) {
-            resultadosCorrectos++;
-        } else {
-            resultadosIncorrectos++;
-        }
-    });
-
-    let correctosElemento = document.getElementById("correctos");
-    let incorrectosElemento = document.getElementById("incorrectos");
-
-    correctosElemento.textContent = "Correctos: " + resultadosCorrectos;
-    incorrectosElemento.textContent = "Incorrectos: " + resultadosIncorrectos;
-    return resultadosCorrectos * 2;
-}
-
-// VER EN DOM
-
-window.onload = function () {
-    for (let i = 0; i < 5; i++) {
-        crearFilaEjercicio();
+    if(usuariosPodio.length === 1){
+        console.log("El Primer lugar es para ", usuariosPodio[0].nombre, "con un puntaje de ", usuariosPodio[0].puntaje);
+        guardarUsuariosEnLocalStorage();
+    }else if(usuariosPodio.length === 2){
+        usuariosPodio.sort((a, b) => a.puntaje - b.puntaje);
+        guardarUsuariosEnLocalStorage();
+        console.log(usuariosPodio);
+        console.log("El Primer lugar es para ", usuariosPodio[0].nombre, "con un puntaje de ", usuariosPodio[0].puntaje);
+        console.log("El Segundo lugar es para ", usuariosPodio[1].nombre, "con un puntaje de ", usuariosPodio[1].puntaje); 
+    }else{
+        usuariosPodio.sort((a, b) => a.puntaje - b.puntaje);
+        guardarUsuariosEnLocalStorage();
+        console.log(usuariosPodio);
+        console.log("El Primer lugar es para ", usuariosPodio[0].nombre, "con un puntaje de ", usuariosPodio[0].puntaje);
+        console.log("El Segundo lugar es para ", usuariosPodio[1].nombre, "con un puntaje de ", usuariosPodio[1].puntaje);
+        console.log("El Tercer lugar es para ", usuariosPodio[2].nombre, "con un puntaje de ", usuariosPodio[2].puntaje);
     }
-    mostrarUsuariosEnDOM();
+}
+
+
+//---------
+let i = 0;
+// Funciones
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const preguntas = [
+    { enunciado: '', respuestaCorrecta: '' },
+    { enunciado: '', respuestaCorrecta: '' },
+    { enunciado: '', respuestaCorrecta: '' },
+    { enunciado: '', respuestaCorrecta: '' },
+    { enunciado: '', respuestaCorrecta: '' },
+];
+
+let preguntaActual = 0;
+let number, suma;
+
+function cargarPregunta(numero1, numero2) {
+    const preguntaElemento = document.getElementById('pregunta');
+    suma = numero1 + numero2;
+    preguntas[preguntaActual].enunciado = `¿Cuánto es ${numero1} + ${numero2}?`;
+    preguntaElemento.textContent = preguntas[preguntaActual].enunciado;
+}
+
+function ejerciciosNumeros() {
+    let num1 = getRandomNumber(1, 10);
+    let num2 = getRandomNumber(1, 10);
+    number = [num1, num2];
+    cargarPregunta(num1, num2);
+    return number;
+}
+
+// onclick del botón
+document.getElementById('verificarButton').onclick = verificarRespuesta;
+
+// Inicialización
+window.onload = () => {
+    number = ejerciciosNumeros();
 };
 
+function verificarRespuesta() {
+    const respuestaUsuario = parseInt(document.getElementById('respuesta').value);
+    const resultadoElemento = document.getElementById('resultado');
+    if (respuestaUsuario === suma) {
+        resultadoElemento.textContent = '¡Correcto!';
+        i++;
+        console.log('puntos obtenidos:', i * 2);
+
+    } else {
+        resultadoElemento.textContent = 'Incorrecto. La respuesta correcta es: ' + suma;
+    }
+
+    preguntaActual++;
+    if (preguntaActual < preguntas.length) {
+        ejerciciosNumeros();
+    } else if ((preguntaActual <= preguntas.length) && (i === 5)) {
+        resultadoElemento.textContent = `Obtuvo un ${i * 2},  Uds ha aprobado el examen`;
+        //crear un boton q registre el nombre
+
+    } else if ((preguntaActual <= preguntas.length) && (respuestaUsuario === suma)) {
+        resultadoElemento.textContent = 'Examen Finalizado. ¡Buen trabajo!';
+        //crear un boton q registre el nombre
+
+    } else if ((preguntaActual <= preguntas.length) && (i < 3)) {
+        resultadoElemento.textContent = `Obtuvo un ${i * 2}, ha reprobado el examen`;
+        //crear un boton q registre el nombre
+
+    } else {
+        resultadoElemento.textContent = 'Respuesta incorrecta, Uds ha aprobado el examen. ';
+        //crear un boton q registre el nombre
+    }
+}

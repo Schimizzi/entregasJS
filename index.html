@@ -1,29 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pre-Entrega 3</title>
+    <title>Examen de Matemáticas</title>
 </head>
 
 <body>
-
-    <h1>Ejercicio de Sumas!</h1>
-
-    <div id="ejercicios">
-        
+    <div id="app">
+        <h1>Examen de Matemáticas</h1>
+        <div id="pregunta-container">
+            <p id="pregunta"></p>
+            <input type="text" id="respuesta" placeholder="Ingrese su respuesta">
+            <button id="verificarButton">Verificar</button>
+        </div>
+        <div id="resultado"></div>
     </div>
 
-    <button type="button" onclick="corregir()">Corregir</button>
-
-    <div id="resultados">
-        <h2>Resultados:</h2>
-        <p id="correctos">Correctos: </p>
-        <p id="incorrectos">Incorrectos: </p>
+    <div>
+        <button type="button" onclick="newUser()">crearlo en JS</button>
     </div>
 
-    <button type="button" onclick="newUser()">Registrá tu Nombre</button>
     <div>
         <ol id="lista-usuarios"></ol>
     </div>
