@@ -138,6 +138,11 @@ const preguntas = [
     { enunciado: '', respuestaCorrecta: '' },
     { enunciado: '', respuestaCorrecta: '' },
     { enunciado: '', respuestaCorrecta: '' },
+    { enunciado: '', respuestaCorrecta: '' },
+    { enunciado: '', respuestaCorrecta: '' },
+    { enunciado: '', respuestaCorrecta: '' },
+    { enunciado: '', respuestaCorrecta: '' },
+    { enunciado: '', respuestaCorrecta: '' },
 ];
 
 let preguntaActual = 0;
@@ -172,7 +177,7 @@ function verificarRespuesta() {
     if (respuestaUsuario === suma) {
         resultadoElemento.textContent = '¡Correcto!';
         i++;
-        console.log('puntos obtenidos:', i * 2);
+        console.log('puntos obtenidos:', i);
 
     } else {
         resultadoElemento.textContent = 'Incorrecto. La respuesta correcta es: ' + suma;
@@ -181,9 +186,9 @@ function verificarRespuesta() {
     preguntaActual++;
     if (preguntaActual < preguntas.length) {
         ejerciciosNumeros();
-    } else if ((preguntaActual <= preguntas.length) && (i === 5)) {
+    } else if ((preguntaActual <= preguntas.length) && (i === 10)) {
         resultadoElemento.innerHTML = Swal.fire({
-            title: `Obtuvo un ${i * 2}<br>  Uds ha aprobado el examen`,
+            title: `Obtuvo un ${i}<br>  Máxima Puntución!`,
             showDenyButton: true,
             confirmButtonText: 'Registrese',
           }).then((result) => {
@@ -194,22 +199,9 @@ function verificarRespuesta() {
             }
           });
 
-    } else if ((preguntaActual <= preguntas.length) && (respuestaUsuario === suma)) {
+    } else if ((preguntaActual <= preguntas.length) && (i >= 7) && (i <= 9)) {
         resultadoElemento.textContent = Swal.fire({
-            title: 'Examen Finalizado. ¡Buen trabajo!',
-            showDenyButton: true,
-            confirmButtonText: 'Registrese',
-          }).then((result) => {
-            if (result.isConfirmed) {
-                newUser();
-            } else if (result.isDenied) {
-                newUser();
-            }
-          });
-
-    } else if ((preguntaActual <= preguntas.length) && (i < 3)) {
-        resultadoElemento.textContent = Swal.fire({
-            title: `Obtuvo un ${i * 2}, ha reprobado el examen`,
+            title: 'Examen Finalizado.<br> ¡Buen trabajo!',
             showDenyButton: true,
             confirmButtonText: 'Registrese',
           }).then((result) => {
@@ -222,7 +214,7 @@ function verificarRespuesta() {
 
     } else {
         resultadoElemento.textContent = Swal.fire({
-            title: `Respuesta incorrecta <br> Uds ha aprobado el examen.`,
+            title: `Obtuvo un ${i}<br> Ha reprobado el examen`,
             showDenyButton: true,
             confirmButtonText: 'Registrese',
           }).then((result) => {
